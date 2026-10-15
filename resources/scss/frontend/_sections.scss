@@ -1,0 +1,993 @@
+.category-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 0.6rem;
+    overflow: hidden;
+    text-decoration: none;
+    color: $nubic-charcoal;
+    height: 100%;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+    transition: transform 0.3s, box-shadow 0.3s;
+
+    // red bar that grows across the bottom on hover
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 4px;
+        background: linear-gradient(90deg, $nubic-red-dark, $nubic-coral);
+        transition: width 0.35s ease;
+    }
+
+    .thumb {
+        position: relative;
+        height: 190px;
+        overflow: hidden;
+        background: radial-gradient(circle at 50% 40%, #fff 0%, $nubic-light 70%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 86px;
+            height: 86px;
+            border-radius: 50%;
+            background: #fff;
+            color: $primary;
+            font-size: 2.6rem;
+            box-shadow: 0 8px 22px rgba($nubic-red, 0.25);
+            transition: all 0.3s;
+        }
+
+        // soft fade into the card body
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 40%;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.12), transparent);
+            pointer-events: none;
+        }
+    }
+
+    .body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        flex: 1;
+        padding: 1.2rem 1.4rem 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.05rem;
+        line-height: 1.3;
+        text-transform: uppercase;
+        margin: 0;
+        transition: color 0.25s;
+    }
+
+    .go {
+        margin-top: auto;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: $primary;
+
+        i {
+            display: inline-block;
+            transition: transform 0.25s;
+        }
+    }
+
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.14);
+        color: $nubic-charcoal;
+
+        &::after {
+            width: 100%;
+        }
+
+        h3 {
+            color: $primary;
+        }
+
+        .thumb img {
+            transform: scale(1.08);
+        }
+
+        .thumb i {
+            background: $primary;
+            color: #fff;
+            transform: scale(1.08);
+        }
+
+        .go i {
+            transform: translateX(5px);
+        }
+    }
+}
+
+.about-block {
+    .about-img {
+        background: $nubic-coral;
+        border-radius: $border-radius;
+        padding: 2.5rem;
+        color: #fff;
+        text-align: center;
+
+        h3 {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .big {
+            font-size: 4rem;
+            font-family: $headings-font-family;
+            line-height: 1;
+        }
+    }
+}
+
+.stat-strip {
+    background: $nubic-charcoal;
+    color: #fff;
+    padding: 2.2rem 0;
+
+    .num {
+        font-family: $headings-font-family;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: $nubic-coral;
+        line-height: 1;
+    }
+
+    .lbl {
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-size: 0.78rem;
+        color: #bbb;
+    }
+}
+
+.cert-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-align: center;
+    padding: 1.5rem 1.2rem 1.3rem;
+    background: #fff;
+    border: 1px solid #e6e6e8;
+    border-bottom: 3px solid transparent;
+    border-radius: 0.6rem;
+    height: 100%;
+    transition: all 0.25s;
+
+    // fixed logo area so every card lines up
+    .logo-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 90px;
+
+        img {
+            display: block;
+            max-height: 90px;
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        i {
+            font-size: 3.2rem;
+            color: $primary;
+        }
+    }
+
+    span {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: $nubic-charcoal;
+        line-height: 1.3;
+        padding-top: 0.9rem;
+        border-top: 1px solid #eee;
+        width: 100%;
+    }
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+        border-bottom-color: $primary;
+    }
+}
+
+.feature-card {
+    background: #fff;
+    border-radius: $border-radius;
+    padding: 2rem 1.5rem;
+    height: 100%;
+    border-bottom: 4px solid transparent;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.25s;
+
+    i {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 62px;
+        height: 62px;
+        border-radius: 50%;
+        background: rgba($nubic-red, 0.1);
+        color: $primary;
+        font-size: 1.7rem;
+        margin-bottom: 1rem;
+        transition: all 0.25s;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+    }
+
+    p {
+        color: $nubic-grey;
+        font-size: 0.95rem;
+        margin: 0;
+    }
+
+    &:hover {
+        transform: translateY(-6px);
+        border-bottom-color: $primary;
+        box-shadow: 0 16px 34px rgba(0, 0, 0, 0.1);
+
+        i {
+            background: $primary;
+            color: #fff;
+        }
+    }
+}
+
+
+.stat-strip {
+    position: relative;
+    z-index: 3;
+    border-bottom: 4px solid $nubic-coral;
+}
+
+.job-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    background: #fff;
+    border: 1px solid #e6e6e8;
+    border-left: 4px solid $primary;
+    border-radius: $border-radius;
+    padding: 1.5rem 1.75rem;
+    transition: all 0.25s;
+
+    h3 {
+        font-size: 1.25rem;
+        text-transform: uppercase;
+        margin: 0 0 0.5rem;
+
+        a {
+            color: $nubic-charcoal;
+            text-decoration: none;
+        }
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.2rem;
+        color: $nubic-grey;
+        font-size: 0.9rem;
+
+        i {
+            color: $primary;
+            margin-right: 0.3rem;
+        }
+    }
+
+    p {
+        margin: 0.7rem 0 0;
+        color: $nubic-grey;
+    }
+
+    &:hover {
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+        transform: translateY(-3px);
+
+        h3 a {
+            color: $primary;
+        }
+    }
+}
+
+.job-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    background: $nubic-light;
+    border-radius: $border-radius;
+    padding: 1.25rem;
+
+    small {
+        display: block;
+        color: $nubic-grey;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.72rem;
+    }
+
+    strong {
+        color: $nubic-charcoal;
+    }
+}
+
+.apply-card {
+    background: #fff;
+    border: 1px solid #e6e6e8;
+    border-top: 4px solid $primary;
+    border-radius: $border-radius;
+    padding: 1.75rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    position: sticky;
+    top: 90px;
+}
+
+.post-card {
+    background: #fff;
+    border: 1px solid #e6e6e8;
+    border-radius: $border-radius;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s;
+
+    .thumb {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 210px;
+        background: $nubic-light;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        i {
+            font-size: 3.5rem;
+            color: $primary;
+        }
+    }
+
+    .body {
+        padding: 1.25rem 1.4rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .date {
+        font-size: 0.8rem;
+        color: $nubic-grey;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        i {
+            color: $primary;
+        }
+    }
+
+    h3 {
+        font-size: 1.15rem;
+        margin: 0.5rem 0;
+
+        a {
+            color: $nubic-charcoal;
+            text-decoration: none;
+        }
+    }
+
+    p {
+        color: $nubic-grey;
+        font-size: 0.95rem;
+        flex: 1;
+    }
+
+    .more {
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.8rem;
+        text-decoration: none;
+    }
+
+    &:hover {
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+        transform: translateY(-4px);
+
+        .thumb img {
+            transform: scale(1.07);
+        }
+
+        h3 a {
+            color: $primary;
+        }
+    }
+}
+
+.post-meta {
+    color: $nubic-grey;
+
+    i {
+        color: $primary;
+    }
+}
+
+.about-photo {
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 0.6rem;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.about-text {
+    color: $nubic-grey;
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 1.5rem;
+}
+
+.about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+
+    span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.45rem 1rem;
+        background: #fff;
+        border: 1px solid #e6e6e8;
+        border-radius: 50rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: $nubic-charcoal;
+        transition: all 0.25s;
+
+        i {
+            color: $primary;
+            font-size: 1.05rem;
+            transition: color 0.25s;
+        }
+
+        &:hover {
+            background: $primary;
+            border-color: $primary;
+            color: #fff;
+
+            i {
+                color: #fff;
+            }
+        }
+    }
+}
+
+.why-photo {
+    position: relative;
+
+    img {
+        display: block;
+        width: 100%;
+        border-radius: 0.6rem;
+    }
+}
+
+.vision-card {
+    position: relative;
+    height: 100%;
+    background: #fff;
+    border-radius: $border-radius;
+    border-top: 4px solid $primary;
+    padding: 2.2rem 1.9rem 2rem;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transition: all 0.25s;
+
+    // big faded number
+    .num {
+        position: absolute;
+        right: 1.2rem;
+        top: 0.6rem;
+        font-size: 4rem;
+        font-weight: 700;
+        line-height: 1;
+        color: rgba($nubic-charcoal, 0.06);
+    }
+
+    i {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: rgba($nubic-red, 0.1);
+        color: $primary;
+        font-size: 1.6rem;
+        margin-bottom: 1.1rem;
+        transition: all 0.25s;
+    }
+
+    h3 {
+        font-size: 1.15rem;
+        text-transform: uppercase;
+        margin-bottom: 0.7rem;
+    }
+
+    p {
+        color: $nubic-grey;
+        font-size: 0.95rem;
+        line-height: 1.8;
+        margin: 0;
+    }
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 38px rgba(0, 0, 0, 0.12);
+
+        i {
+            background: $primary;
+            color: #fff;
+        }
+    }
+}
+
+.cta-wrap {
+    padding: 4rem 0 5rem;
+    background: #fff;
+}
+
+.cta-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 3rem 3.5rem;
+    border-radius: 0.8rem;
+    color: #fff;
+    background:
+        radial-gradient(circle at 100% 0%, rgba($nubic-coral, 0.45), transparent 50%),
+        linear-gradient(120deg, #1c1d20, $nubic-charcoal);
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.2);
+
+    // decorative rings
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.08);
+        pointer-events: none;
+    }
+
+    &::before {
+        width: 280px;
+        height: 280px;
+        right: -70px;
+        top: -90px;
+    }
+
+    &::after {
+        width: 180px;
+        height: 180px;
+        right: 120px;
+        bottom: -100px;
+        border-color: rgba($nubic-coral, 0.3);
+    }
+
+    .cta-text {
+        position: relative;
+        z-index: 1;
+        max-width: 560px;
+    }
+
+    .eyebrow {
+        color: $nubic-coral;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+
+    h2 {
+        text-transform: uppercase;
+        font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+        margin: 0.5rem 0 0.7rem;
+    }
+
+    p {
+        color: #b9b9be;
+        margin: 0;
+    }
+
+    .cta-actions {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .cta-phone {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.05rem;
+
+        i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            color: $nubic-coral;
+            transition: all 0.25s;
+        }
+
+        small {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b9b9be;
+        }
+
+        &:hover {
+            color: #fff;
+
+            i {
+                background: $primary;
+                border-color: $primary;
+                color: #fff;
+            }
+        }
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .cta-card {
+        padding: 2.2rem 1.5rem;
+    }
+}
+
+// ---------- Home page polish ----------
+
+// friendly sub-heading under section titles
+.section-title .sub {
+    color: $nubic-grey;
+    max-width: 560px;
+    margin: 0.9rem 0 0;
+}
+
+.section-title.text-center .sub {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// quick access cards overlapping the hero
+.quick-access {
+    position: relative;
+    z-index: 5;
+    margin-top: -2.6rem;
+    padding-bottom: 1rem;
+    background: transparent;
+
+    .qa-item {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        height: 100%;
+        padding: 1.1rem 1.2rem;
+        background: #fff;
+        border-radius: 0.6rem;
+        border-bottom: 3px solid transparent;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        text-decoration: none;
+        color: $nubic-charcoal;
+        transition: all 0.25s;
+
+        i {
+            flex: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: rgba($nubic-red, 0.1);
+            color: $primary;
+            font-size: 1.2rem;
+            transition: all 0.25s;
+        }
+
+        strong {
+            display: block;
+            font-size: 0.92rem;
+            line-height: 1.25;
+        }
+
+        small {
+            display: block;
+            color: $nubic-grey;
+            font-size: 0.78rem;
+            line-height: 1.3;
+        }
+
+        &:hover {
+            transform: translateY(-5px);
+            border-bottom-color: $primary;
+
+            i {
+                background: $primary;
+                color: #fff;
+            }
+        }
+    }
+}
+
+// dark "Why Nubic" band
+.why-dark {
+    background: linear-gradient(135deg, #1c1d20 0%, $nubic-charcoal 100%);
+
+    .section-title h2 {
+        color: #fff;
+    }
+
+    .section-title .sub {
+        color: #b9b9be;
+    }
+
+    .feature-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: none;
+
+        h3 {
+            color: #fff;
+        }
+
+        p {
+            color: #b9b9be;
+        }
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.09);
+        }
+    }
+}
+
+// scroll reveal (only when JS is running)
+.js .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.js .reveal.in {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+// back to top
+.back-to-top {
+    position: fixed;
+    right: 24px;
+    bottom: 90px;
+    z-index: 1030;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: $nubic-charcoal;
+    color: #fff;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s;
+
+    &.show {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+    }
+
+    &:hover {
+        background: $primary;
+    }
+}
+
+// About Us page
+.about-intro {
+    p {
+        color: $nubic-grey;
+        line-height: 1.85;
+    }
+
+    p:first-child {
+        font-size: 1.08rem;
+        color: $nubic-charcoal;
+        font-weight: 500;
+    }
+}
+
+.why-photo img {
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.14);
+}
+
+.vision-block {
+    position: relative;
+}
+
+// Careers page
+.perk-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    height: 100%;
+    min-height: 140px;
+    padding: 1.4rem 1rem;
+    text-align: center;
+    background: #fff;
+    border-radius: 0.6rem;
+    border-bottom: 3px solid transparent;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.07);
+    transition: all 0.25s;
+
+    i {
+        font-size: 1.9rem;
+        color: $primary;
+    }
+
+    span {
+        font-weight: 600;
+        font-size: 0.92rem;
+        line-height: 1.3;
+    }
+
+    &:hover {
+        transform: translateY(-5px);
+        border-bottom-color: $primary;
+    }
+}
+
+.empty-jobs {
+    background: #fff;
+    border-radius: 0.8rem;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
+
+    i {
+        font-size: 3rem;
+        color: $primary;
+    }
+
+    p {
+        color: $nubic-grey;
+        margin: 0.8rem 0 1.4rem;
+    }
+}
+
+.step-card {
+    position: relative;
+    height: 100%;
+    text-align: center;
+    padding: 2.4rem 1.6rem 2rem;
+    background: #fff;
+    border-radius: 0.6rem;
+    border: 1px solid #e6e6e8;
+    transition: all 0.25s;
+
+    .n {
+        position: absolute;
+        top: -18px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: $primary;
+        color: #fff;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 14px rgba($nubic-red, 0.4);
+    }
+
+    i {
+        font-size: 2.2rem;
+        color: $nubic-charcoal;
+        display: block;
+        margin-bottom: 0.8rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+    }
+
+    p {
+        color: $nubic-grey;
+        font-size: 0.95rem;
+        margin: 0;
+    }
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.job-card {
+    background: #fff;
+}

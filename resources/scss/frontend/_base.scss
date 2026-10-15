@@ -1,0 +1,190 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-size: 1rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+
+// Type scale
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+
+h1 {
+    font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+}
+
+h2 {
+    font-size: clamp(1.45rem, 2.6vw, 1.9rem);
+}
+
+h3 {
+    font-size: 1.25rem;
+}
+
+h4 {
+    font-size: 1.1rem;
+}
+
+h5 {
+    font-size: 1rem;
+}
+
+.section {
+    padding: 5rem 0;
+}
+
+.section-sm {
+    padding: 3rem 0;
+}
+
+.bg-soft {
+    background: $nubic-light;
+}
+
+.section-title {
+    margin-bottom: 3rem;
+
+    .eyebrow {
+        display: inline-block;
+        font-family: $headings-font-family;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 2.5px;
+        font-weight: 700;
+        color: $primary;
+        margin-bottom: 0.4rem;
+    }
+
+    h2 {
+        font-size: clamp(1.5rem, 2.8vw, 1.9rem);
+        text-transform: uppercase;
+        margin-bottom: 0.8rem;
+
+        &::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: $primary;
+            margin-top: 0.8rem;
+        }
+    }
+
+    &.text-center h2::after {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.btn {
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.7rem 1.6rem;
+}
+
+.btn-lg {
+    font-size: 0.9rem;
+    padding: 0.85rem 2rem;
+}
+
+.btn-sm {
+    font-size: 0.78rem;
+    padding: 0.5rem 1.1rem;
+}
+
+.btn-primary {
+    --bs-btn-hover-bg: #{$nubic-red-dark};
+    --bs-btn-hover-border-color: #{$nubic-red-dark};
+    --bs-btn-color: #fff;
+    --bs-btn-hover-color: #fff;
+}
+
+.page-banner {
+    background: linear-gradient(135deg, $nubic-charcoal 0%, #44464c 100%);
+    color: #fff;
+    padding: 3.5rem 0;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        position: absolute;
+        right: -60px;
+        top: -40px;
+        bottom: -40px;
+        width: 220px;
+        background: $primary;
+        transform: skewX(-18deg);
+        opacity: 0.9;
+    }
+
+    h1 {
+        text-transform: uppercase;
+        font-size: clamp(1.6rem, 3vw, 2.2rem);
+        margin: 0;
+        position: relative;
+        z-index: 1;
+    }
+
+    .breadcrumb {
+        position: relative;
+        z-index: 1;
+        margin: 0.5rem 0 0;
+        --bs-breadcrumb-divider-color: #bbb;
+
+        a {
+            color: #ddd;
+        }
+
+        .active {
+            color: #fff;
+        }
+    }
+}
+
+.cms-content {
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    p {
+        line-height: 1.8;
+    }
+
+    h2 {
+        text-transform: uppercase;
+        margin: 2.5rem 0 0.4rem;
+
+        &::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: $primary;
+            margin-top: 0.7rem;
+        }
+    }
+
+    h4 {
+        color: $primary;
+        font-weight: 600;
+        margin-bottom: 1.2rem;
+    }
+
+    h2:first-child {
+        margin-top: 0;
+    }
+}

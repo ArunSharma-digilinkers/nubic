@@ -1,0 +1,24 @@
+// Nubic brand tokens (from the Product Catalogue 2023)
+$nubic-red: #e8402f;
+$nubic-red-dark: #c8321f;
+$nubic-coral: #f0533f;
+$nubic-grey: #6d6e71;
+$nubic-charcoal: #2b2d31;
+$nubic-light: #f5f5f6;
+
+// Bootstrap overrides
+$primary: $nubic-red;
+$secondary: $nubic-grey;
+$dark: $nubic-charcoal;
+$light: $nubic-light;
+$body-color: #3d3f44;
+$link-color: $nubic-red;
+$link-hover-color: $nubic-red-dark;
+$font-family-sans-serif: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+$headings-font-family: 'Poppins', 'Segoe UI', sans-serif;
+$headings-font-weight: 700;
+$border-radius: 0.35rem;
+$enable-shadows: false;
+$navbar-light-color: $nubic-charcoal;
+$navbar-light-hover-color: $nubic-red;
+$navbar-light-active-color: $nubic-red;

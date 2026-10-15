@@ -1,0 +1,253 @@
+.hero {
+    position: relative;
+    overflow: hidden;
+    background: $nubic-charcoal;
+
+    .carousel-item {
+        min-height: 620px;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(120deg, #1c1d20 0%, $nubic-charcoal 60%, #4a4c52 100%);
+
+        // dark gradient for text legibility
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(90deg, rgba(10, 11, 14, 0.78) 0%, rgba(10, 11, 14, 0.4) 40%, transparent 65%),
+                linear-gradient(0deg, rgba(10, 11, 14, 0.35) 0%, transparent 25%);
+        }
+    }
+
+    // separate layer so the slow zoom never scales the text
+    .slide-bg {
+        position: absolute;
+        inset: 0;
+        background: center / cover no-repeat;
+        transform: scale(1);
+    }
+
+    .carousel-item.active .slide-bg {
+        animation: heroZoom 9s ease-out forwards;
+    }
+
+    .hero-inner {
+        position: relative;
+        z-index: 2;
+        min-height: 620px;
+        display: flex;
+        align-items: center;
+        color: #fff;
+        padding: 3rem 0 4.5rem 3.5rem;
+    }
+
+    .hero-content {
+        max-width: 520px;
+
+        &::before {
+            content: '';
+            display: block;
+            width: 64px;
+            height: 4px;
+            background: $nubic-coral;
+            border-radius: 2px;
+            margin-bottom: 1.4rem;
+        }
+    }
+
+    .hero-eyebrow {
+        display: inline-block;
+        position: relative;
+        padding-left: 3rem;
+        margin-bottom: 1.1rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: $nubic-coral;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 2.2rem;
+            height: 3px;
+            background: $nubic-coral;
+        }
+    }
+
+    h1 {
+        font-size: clamp(1.7rem, 3.4vw, 2.7rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        line-height: 1.2;
+        letter-spacing: 0.5px;
+        margin-bottom: 0;
+        text-wrap: balance;
+        text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    p.lead {
+        font-size: 1rem;
+        line-height: 1.7;
+        max-width: 460px;
+        color: #e6e6e8;
+        margin: 1.2rem 0 2rem;
+        text-wrap: pretty;
+    }
+
+    // staggered text entrance on the active slide
+    .carousel-item.active {
+        .hero-eyebrow {
+            animation: heroUp 0.7s 0.1s both;
+        }
+
+        h1 {
+            animation: heroUp 0.7s 0.25s both;
+        }
+
+        p.lead {
+            animation: heroUp 0.7s 0.4s both;
+        }
+
+        .btn {
+            animation: heroUp 0.7s 0.55s both;
+        }
+    }
+
+    // arrows
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: auto;
+        z-index: 4;
+        opacity: 1;
+        padding: 0 1.25rem;
+
+        span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            color: #fff;
+            backdrop-filter: blur(4px);
+            transition: all 0.25s;
+        }
+
+        &:hover span {
+            background: $primary;
+            border-color: $primary;
+            transform: scale(1.08);
+        }
+    }
+
+    // progress-style indicators
+    .carousel-indicators {
+        z-index: 4;
+        margin-bottom: 1.6rem;
+        gap: 0.4rem;
+
+        [data-bs-target] {
+            width: 40px;
+            height: 4px;
+            border: 0;
+            margin: 0;
+            background: rgba(255, 255, 255, 0.45);
+            border-radius: 2px;
+            opacity: 1;
+            transition: all 0.3s;
+
+            &.active {
+                background: $nubic-coral;
+                width: 64px;
+            }
+        }
+    }
+}
+
+@keyframes heroZoom {
+    to {
+        transform: scale(1.08);
+    }
+}
+
+@keyframes heroUp {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@include media-breakpoint-down(md) {
+
+    .hero .carousel-item,
+    .hero .hero-inner {
+        min-height: 480px;
+    }
+
+    .hero .hero-inner {
+        padding: 2.5rem 0 4rem 0.5rem;
+    }
+
+    .hero .carousel-control-prev,
+    .hero .carousel-control-next {
+        display: none;
+    }
+}
+
+.hero-default {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 80% 20%, rgba($nubic-red, 0.35), transparent 45%),
+        linear-gradient(120deg, #1c1d20 0%, $nubic-charcoal 60%, #3a3c42 100%);
+
+
+    .hero-inner {
+        min-height: 600px;
+        padding-left: 0;
+    }
+
+    h1 em {
+        font-style: normal;
+        color: $nubic-coral;
+    }
+
+    .hero-eyebrow {
+        display: inline-block;
+        font-family: $headings-font-family;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 3px;
+        font-weight: 700;
+        color: $nubic-coral;
+        margin-bottom: 1rem;
+        padding-left: 3rem;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 2.2rem;
+            height: 3px;
+            background: $nubic-coral;
+        }
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .hero-default .hero-inner {
+        min-height: 460px;
+    }
+}
