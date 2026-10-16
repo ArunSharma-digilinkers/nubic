@@ -1,187 +1,183 @@
 @extends('layouts.frontend')
+@section('body_class', 'page-grey')
 
 @section('content')
 {{-- Hero --}}
-@if ($sliders->count())
-<section class="hero">
-    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
-        @if ($sliders->count() > 1)
-            <div class="carousel-indicators">
-                @foreach ($sliders as $i => $s)
-                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ $i }}" class="{{ $i === 0 ? 'active' : '' }}" aria-label="Slide {{ $i + 1 }}"></button>
+<section class="home-hero">
+    <div class="container">
+        <div id="heroCarousel" class="carousel slide carousel-fade hero-frame" data-bs-ride="carousel" data-bs-interval="6000">
+            <div class="carousel-inner">
+                @forelse ($sliders as $i => $s)
+                    <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
+                        @if ($s->image)<img class="hero-img" src="{{ asset('storage/'.$s->image) }}" alt="">@endif
+                        <div class="hero-copy">
+                            <h1>{{ $s->title }}</h1>
+                            <p>{{ $s->subtitle ?: 'MCBs, isolators, RCCBs, distribution boards, changeovers and energy meters, made in-house in Delhi.' }}</p>
+                            <div class="hero-actions">
+                                <a href="{{ $s->button_text ? ($s->button_url ?: route('products')) : route('products') }}" class="btn btn-light btn-lg">{{ $s->button_text ?: 'Explore Products' }}</a>
+                                @if (!empty($S['catalogue_url']))<a href="{{ $S['catalogue_url'] }}" target="_blank" rel="noopener" class="btn btn-outline-light btn-lg">Download Catalogue</a>@endif
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="carousel-item active">
+                        <div class="hero-copy">
+                            <span class="hero-tag">ISI marked · 10 kA</span>
+                            <h1>Electrical protection, made in India</h1>
+                            <p>MCBs, isolators, RCCBs, distribution boards, changeovers and energy meters.</p>
+                            <div class="hero-actions"><a href="{{ route('products') }}" class="btn btn-primary btn-lg">Explore Products</a></div>
+                        </div>
+                    </div>
+                @endforelse
+            </div>
+            @if ($sliders->count() > 1)
+                <div class="carousel-indicators">
+                    @foreach ($sliders as $i => $s)
+                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ $i }}" class="{{ $i === 0 ? 'active' : '' }}" aria-label="Slide {{ $i + 1 }}"></button>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+        <div class="info-strip">
+            Dealer and bulk pricing available across India. <a href="{{ route('contact') }}">Talk to our sales team</a>
+        </div>
+    </div>
+</section>
+
+{{-- Range --}}
+<section class="home-section" id="range">
+    <div class="container">
+        <div class="section-head">
+            <h2>Explore Our Range</h2>
+            <a href="{{ route('products') }}">View all products <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="range-grid">
+            @foreach ($categories as $i => $c)
+                @if ($i === 0)
+                    <a href="{{ route('products.category', $c->slug) }}" class="range-tile range-feature">
+                        <img src="{{ asset('img/mcb-box.png') }}" alt="">
+                        <span class="range-feature-copy">
+                            <span class="kicker">Protection devices</span>
+                            <span class="title">{{ $c->name }}</span>
+                            <span class="desc">{{ $c->products_count }} products, from single pole to four pole.</span>
+                            <span class="btn btn-light btn-sm">View range</span>
+                        </span>
+                    </a>
+                @else
+                    <a href="{{ route('products.category', $c->slug) }}" class="range-tile">
+                        <span class="range-media"><img src="{{ $c->imageUrl() }}" alt="" loading="lazy"></span>
+                        <span class="range-body">
+                            <span class="title">{{ $c->name }}</span>
+                            <span class="desc">{{ \Illuminate\Support\Str::limit($c->description, 90) }}</span>
+                            <span class="count">{{ $c->products_count }} {{ \Illuminate\Support\Str::plural('product', $c->products_count) }}</span>
+                        </span>
+                    </a>
+                @endif
+            @endforeach
+        </div>
+    </div>
+</section>
+
+{{-- Popular products --}}
+@if ($popular->count())
+<section class="home-section">
+    <div class="container">
+        <div class="section-head">
+            <h2>Popular Products</h2>
+            <a href="{{ route('products') }}">View all products <i class="bi bi-arrow-right"></i></a>
+        </div>
+        @if ($popular->count() > 1)
+            <div class="nav pill-tabs" role="tablist">
+                @foreach ($popular as $catId => $items)
+                    <button class="{{ $loop->first ? 'active' : '' }}" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#pop-{{ $catId }}" aria-controls="pop-{{ $catId }}" aria-selected="{{ $loop->first ? 'true' : 'false' }}">{{ $categories->firstWhere('id', $catId)->name }}</button>
                 @endforeach
             </div>
         @endif
-        <div class="carousel-inner">
-            @foreach ($sliders as $i => $s)
-                <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
-                    <div class="slide-bg" @if($s->image) style="background-image:url('{{ asset('storage/'.$s->image) }}')" @endif></div>
-                    <div class="container">
-                        <div class="hero-inner">
-                            <div class="hero-content">
-                                <h1>{{ $s->title }}</h1>
-                                <p class="lead">{{ $s->subtitle ?: 'Switchgear, Wires & Cables, Fans, Modular Switches, Motors and other Domestic Appliances.' }}</p>
-                                <a href="{{ $s->button_text ? ($s->button_url ?: route('products')) : route('products') }}" class="btn btn-primary btn-lg">{{ $s->button_text ?: 'Explore Products' }} <i class="bi bi-arrow-right ms-1"></i></a>
-                            </div>
-                        </div>
+        <div class="tab-content">
+            @foreach ($popular as $catId => $items)
+                <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="pop-{{ $catId }}" role="tabpanel">
+                    <div class="card-grid">
+                        @foreach ($items as $p)@include('pages._product-card', ['product' => $p])@endforeach
                     </div>
                 </div>
             @endforeach
         </div>
-        @if ($sliders->count() > 1)
-            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev" aria-label="Previous"><span><i class="bi bi-chevron-left"></i></span></button>
-            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next" aria-label="Next"><span><i class="bi bi-chevron-right"></i></span></button>
-        @endif
     </div>
 </section>
-@else
-<section class="hero hero-default">
+@endif
+
+{{-- Stats --}}
+<section class="home-section">
     <div class="container">
-        <div class="hero-inner">
-            <div>
-                <span class="hero-eyebrow">Safe · Reliable · Certified</span>
-                <h1>Powering Every <em>Connection</em></h1>
-                <p class="lead">MCBs, RCCBs, isolators, distribution boards and more — engineered for homes, industries and infrastructure.</p>
-                <a href="{{ route('products') }}" class="btn btn-primary btn-lg me-2">Explore Products</a>
-                <a href="{{ route('contact') }}" class="btn btn-outline-light btn-lg">Get a Quote</a>
+        <div class="stats-band">
+            <div><strong>{{ $categories->count() }}</strong><span>Product categories</span></div>
+            <div><strong>{{ $codeCount }}</strong><span>Product codes in the catalogue</span></div>
+            <div><strong>14</strong><span>Export countries</span></div>
+            <div><strong>ISI</strong><span>Marked, BIS-certified products</span></div>
+        </div>
+    </div>
+</section>
+
+{{-- Manufacturing --}}
+<section class="home-section">
+    <div class="container">
+        <div class="make-block">
+            <div class="make-media">
+                <img src="{{ asset('img/factory.jpg') }}" alt="Production line" loading="lazy">
+            </div>
+            <div class="make-copy">
+                <span class="kicker">Made by Nubic</span>
+                <h2>Designed, built and tested in our own plant</h2>
+                <p>Every Nubic product is made in-house, from tooling to final testing, so quality is controlled at each step.</p>
+                <ul class="check-list">
+                    <li>Tool room with wire-cut and EDM machines</li>
+                    <li>In-house press shop</li>
+                    <li>Electroplating and powder coating</li>
+                    <li>Test lab for HV, CT/PT and relay testing</li>
+                </ul>
+                @if ($about)<a href="{{ route('page', $about->slug) }}" class="btn btn-outline-primary">About Nubic</a>@endif
             </div>
         </div>
     </div>
 </section>
-@endif
-
-{{-- Quick access --}}
-<section class="quick-access">
-    <div class="container">
-        <div class="row g-3">
-            @foreach ([
-                ['grid-3x3-gap-fill', 'Browse Products', 'See the full range', route('products')],
-                ['file-earmark-arrow-down-fill', 'Download Catalogue', 'Get the latest PDF', $S['catalogue_url'] ?? route('products')],
-                ['chat-dots-fill', 'Get a Quote', 'Tell us your need', route('contact')],
-                ['telephone-fill', 'Call Us', $S['phone'] ?? 'Talk to our team', !empty($S['phone']) ? 'tel:'.preg_replace('/\s+/', '', $S['phone']) : route('contact')],
-            ] as [$icon, $title, $sub, $url])
-                <div class="col-6 col-lg-3">
-                    <a href="{{ $url }}" class="qa-item" @if (str_ends_with($url, '.pdf')) target="_blank" @endif>
-                        <i class="bi bi-{{ $icon }}"></i>
-                        <span><strong>{{ $title }}</strong><small>{{ $sub }}</small></span>
-                    </a>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- Categories --}}
-<section class="section">
-    <div class="container">
-        <div class="reveal section-title text-center">
-            <span class="eyebrow">Our Range</span>
-            <h2>Product Categories</h2>
-            <p class="sub">Pick a category to find the right product for your home, shop or industry.</p>
-        </div>
-        <div class="row g-4 reveal">
-            @foreach ($categories as $c)
-                <div class="col-sm-6 col-lg-3">
-                    <a href="{{ route('products.category', $c->slug) }}" class="category-card">
-                        <div class="thumb">
-                            @if ($c->image)<img src="{{ asset('storage/'.$c->image) }}" alt="{{ $c->name }}" loading="lazy">@else<i class="bi bi-lightning-charge-fill"></i>@endif
-                        </div>
-                        <div class="body">
-                            <h3>{{ $c->name }}</h3>
-                            <span class="go">View Products <i class="bi bi-arrow-right"></i></span>
-                        </div>
-                    </a>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- About --}}
-@if ($about)
-@php
-    preg_match('/<p[^>]*>(.*?)<\/p>/s', $about->content, $firstPara);
-    $aboutText = strip_tags($firstPara[1] ?? \Illuminate\Support\Str::limit(strip_tags($about->content), 380));
-@endphp
-<section class="section bg-soft about-block">
-    <div class="container">
-        <div class="row g-5 align-items-center reveal">
-            <div class="col-lg-6">
-                <div class="about-photo"><img src="{{ asset('img/mcb-box.png') }}" alt="Nubic MCB"></div>
-            </div>
-            <div class="col-lg-6">
-                <div class="reveal section-title mb-3"><span class="eyebrow">About Nubic</span><h2>Leading Electrical Equipment Manufacturer</h2></div>
-                <p class="about-text">{{ $aboutText }}</p>
-                <div class="about-tags">
-                    @foreach (['MCB', 'RCCB', 'Isolators', 'Distribution Boards', 'Changeover Switches', 'Energy Meters'] as $point)
-                        <span><i class="bi bi-check-lg"></i>{{ $point }}</span>
-                    @endforeach
-                </div>
-                <a href="{{ route('page', $about->slug) }}" class="btn btn-primary mt-4">Read More <i class="bi bi-arrow-right ms-1"></i></a>
-            </div>
-        </div>
-    </div>
-</section>
-@endif
-
-{{-- Featured --}}
-@if ($featured->count())
-<section class="section">
-    <div class="container">
-        <div class="reveal section-title text-center"><span class="eyebrow">Best Sellers</span><h2>Featured Products</h2><p class="sub">Our most popular products, trusted by customers across India.</p></div>
-        <div class="row g-4 reveal">
-            @foreach ($featured as $p)
-                <div class="col-sm-6 col-lg-3">@include('pages._product-card', ['product' => $p])</div>
-            @endforeach
-        </div>
-        <div class="text-center mt-5"><a href="{{ route('products') }}" class="btn btn-primary">View All Products</a></div>
-    </div>
-</section>
-@endif
-
-{{-- Why us --}}
-<section class="section why-dark">
-    <div class="container">
-        <div class="reveal section-title text-center"><span class="eyebrow">Why Nubic</span><h2>Built On Trust</h2><p class="sub">Four good reasons to choose Nubic for your next project.</p></div>
-        <div class="row g-4 reveal">
-            @foreach ([['shield-check','Safety First','Every device is tested to meet international safety standards.'],['lightning-charge','High Performance','Reliable breaking capacity and long service life.'],['award','Certified Quality','Approved by leading certification bodies.'],['headset','Dealer Support','Responsive support and bulk pricing for partners.']] as [$icon,$t,$d])
-                <div class="col-sm-6 col-lg-3"><div class="feature-card"><i class="bi bi-{{ $icon }}"></i><h3>{{ $t }}</h3><p>{{ $d }}</p></div></div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- Latest posts --}}
-@if ($latestPosts->count())
-<section class="section">
-    <div class="container">
-        <div class="reveal section-title text-center"><span class="eyebrow">News &amp; Updates</span><h2>From Our Blog</h2><p class="sub">Tips, news and updates from the Nubic team.</p></div>
-        <div class="row g-4 reveal">
-            @foreach ($latestPosts as $post)
-                <div class="col-md-6 col-lg-4">@include('pages._post-card', ['post' => $post])</div>
-            @endforeach
-        </div>
-        <div class="text-center mt-5"><a href="{{ route('blog') }}" class="btn btn-primary">View All Posts</a></div>
-    </div>
-</section>
-@endif
 
 {{-- Certifications --}}
 @if ($certifications->count())
-<section class="section bg-soft">
+<section class="home-section">
     <div class="container">
-        <div class="reveal section-title text-center"><span class="eyebrow">Internationally Approved</span><h2>Certifications</h2><p class="sub">Quality you can verify.</p></div>
-        <div class="row g-3 justify-content-center reveal">
+        <div class="section-head"><h2>Certified &amp; Trusted</h2></div>
+        <div class="cert-grid">
             @foreach ($certifications as $c)
-                <div class="col-6 col-md-3"><div class="cert-item">
-                    <div class="logo-wrap">@if ($c->image)<img src="{{ asset('storage/'.$c->image) }}" alt="{{ $c->name }}">@else<i class="bi bi-patch-check-fill"></i>@endif</div>
-                    <span>{{ $c->name }}</span>
-                </div></div>
+                <div class="cert-card">
+                    <span class="cert-logo">@if ($c->image)<img src="{{ asset('storage/'.$c->image) }}" alt="">@else<i class="bi bi-patch-check"></i>@endif</span>
+                    <strong>{{ $c->name }}</strong>
+                </div>
             @endforeach
         </div>
     </div>
 </section>
 @endif
 
-@include('pages._cta')
+{{-- Downloads + dealer --}}
+<section class="home-section pb-5">
+    <div class="container">
+        <div class="duo-grid">
+            <div class="duo-card">
+                <i class="bi bi-file-earmark-arrow-down" aria-hidden="true"></i>
+                <h2>Product catalogue</h2>
+                <p>Every product code, rating and MRP in one PDF, free to download with no form to fill.</p>
+                @if (!empty($S['catalogue_url']))<a href="{{ $S['catalogue_url'] }}" target="_blank" rel="noopener" class="btn btn-primary">Download catalogue</a>@endif
+            </div>
+            <div class="duo-card dark">
+                <i class="bi bi-shop" aria-hidden="true"></i>
+                <h2>Become a Nubic dealer</h2>
+                <p>Stock an ISI-marked range with dealer margins and direct support from the factory.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{{ route('contact') }}" class="btn btn-light">Apply now</a>
+                    @if (!empty($S['phone']))<a href="tel:{{ preg_replace('/\s+/', '', $S['phone']) }}" class="btn btn-outline-light">Call {{ $S['phone'] }}</a>@endif
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 @endsection

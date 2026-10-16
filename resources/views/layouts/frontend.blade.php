@@ -3,7 +3,7 @@
 <head>
     @include('layouts.frontend-header')
 </head>
-<body>
+<body class="@yield('body_class')">
     @include('layouts.frontend-navbar')
 
     <main>

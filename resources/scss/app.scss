@@ -1,5 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap');
 @import 'variables';
+
+// Public site only (admin keeps Poppins): one clean sans, and a red deep enough for white button text (AA).
+$nubic-red-strong: #d7321f;
+$page-bg: #f4f4f4;
+$ink: #1f1f1f;
+$muted: #5f6368;
+$line: #e6e6e6;
+$primary: $nubic-red-strong;
+$link-color: $nubic-red-strong;
+$body-color: #2b2d31;
+$font-family-sans-serif: 'Figtree', 'Segoe UI', system-ui, -apple-system, sans-serif;
+$headings-font-family: $font-family-sans-serif;
+$headings-color: $ink;
+
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -9,3 +23,5 @@
 @import 'frontend/sections';
 @import 'frontend/products';
 @import 'frontend/footer';
+@import 'frontend/home';
+@import 'frontend/product-detail';

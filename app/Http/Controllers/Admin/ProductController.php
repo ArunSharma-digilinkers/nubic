@@ -11,9 +11,13 @@ use Illuminate\Http\Request;
 class ProductController extends ResourceController
 {
     protected string $model = Product::class;
+
     protected string $route = 'products';
+
     protected string $title = 'Products';
+
     protected string $singular = 'Product';
+
     protected array $searchable = ['name'];
 
     protected function query(): Builder
@@ -30,6 +34,7 @@ class ProductController extends ResourceController
             ['name' => 'slug', 'label' => 'Slug (auto if empty)', 'type' => 'text', 'rules' => 'nullable|string|max:255'],
             ['name' => 'description', 'label' => 'Description', 'type' => 'editor', 'rules' => 'nullable|string'],
             ['name' => 'features', 'label' => 'Features (one per line)', 'type' => 'textarea', 'rules' => 'nullable|string'],
+            ['name' => 'specs', 'label' => 'Specifications (one "Label: value" per line)', 'type' => 'textarea', 'rules' => 'nullable|string'],
             ['name' => 'image', 'label' => 'Product Image', 'type' => 'image'],
             ['name' => 'sort_order', 'label' => 'Sort Order', 'type' => 'number', 'col' => 4, 'default' => 0, 'rules' => 'nullable|integer'],
             ['name' => 'is_featured', 'label' => 'Featured on Home', 'type' => 'checkbox', 'col' => 4],

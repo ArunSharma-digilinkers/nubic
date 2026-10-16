@@ -66,42 +66,39 @@ h5 {
     }
 
     h2 {
-        font-size: clamp(1.5rem, 2.8vw, 1.9rem);
-        text-transform: uppercase;
-        margin-bottom: 0.8rem;
-
-        &::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: $primary;
-            margin-top: 0.8rem;
-        }
-    }
-
-    &.text-center h2::after {
-        margin-left: auto;
-        margin-right: auto;
+        font-size: clamp(1.6rem, 2.8vw, 2rem);
+        font-weight: 700;
+        margin-bottom: 0.6rem;
     }
 }
 
 .btn {
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    padding: 0.7rem 1.6rem;
+    border-radius: 50rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.7rem 1.5rem;
 }
 
 .btn-lg {
-    font-size: 0.9rem;
-    padding: 0.85rem 2rem;
+    font-size: 1rem;
+    padding: 0.85rem 1.9rem;
 }
 
 .btn-sm {
-    font-size: 0.78rem;
-    padding: 0.5rem 1.1rem;
+    font-size: 0.85rem;
+    padding: 0.45rem 1.1rem;
+}
+
+.btn-outline-primary {
+    --bs-btn-hover-bg: #fff1f0;
+    --bs-btn-hover-color: #{$nubic-red-strong};
+    --bs-btn-active-bg: #ffe3e0;
+    --bs-btn-active-color: #{$nubic-red-strong};
+    border-width: 1.5px;
+}
+
+body.page-grey {
+    background: $page-bg;
 }
 
 .btn-primary {
@@ -112,45 +109,35 @@ h5 {
 }
 
 .page-banner {
-    background: linear-gradient(135deg, $nubic-charcoal 0%, #44464c 100%);
-    color: #fff;
-    padding: 3.5rem 0;
-    position: relative;
-    overflow: hidden;
-
-    &::after {
-        content: '';
-        position: absolute;
-        right: -60px;
-        top: -40px;
-        bottom: -40px;
-        width: 220px;
-        background: $primary;
-        transform: skewX(-18deg);
-        opacity: 0.9;
-    }
+    background: #fff;
+    border-bottom: 1px solid $line;
+    padding: 2.2rem 0 1.8rem;
 
     h1 {
-        text-transform: uppercase;
-        font-size: clamp(1.6rem, 3vw, 2.2rem);
-        margin: 0;
-        position: relative;
-        z-index: 1;
+        font-size: clamp(1.7rem, 3vw, 2.3rem);
+        font-weight: 800;
+        margin: 0.4rem 0 0;
     }
 
     .breadcrumb {
-        position: relative;
-        z-index: 1;
-        margin: 0.5rem 0 0;
-        --bs-breadcrumb-divider-color: #bbb;
+        order: -1;
+        margin: 0;
+        font-size: 0.85rem;
+        --bs-breadcrumb-divider-color: #9a9a9a;
 
         a {
-            color: #ddd;
+            color: $muted;
+            text-decoration: none;
         }
 
         .active {
-            color: #fff;
+            color: $ink;
         }
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -165,17 +152,7 @@ h5 {
     }
 
     h2 {
-        text-transform: uppercase;
-        margin: 2.5rem 0 0.4rem;
-
-        &::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: $primary;
-            margin-top: 0.7rem;
-        }
+        margin: 2.5rem 0 0.6rem;
     }
 
     h4 {

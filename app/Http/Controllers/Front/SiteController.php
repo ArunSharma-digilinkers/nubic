@@ -11,25 +11,31 @@ use App\Models\Page;
 use App\Models\Post;
 use App\Models\Product;
 use App\Models\Slider;
+use App\Models\Variant;
 use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
     public function home()
     {
+        $categories = Category::active()->withCount('products')->get();
+
         return view('pages.index', [
             'sliders' => Slider::active()->get(),
-            'categories' => Category::active()->withCount('products')->get(),
-            'featured' => Product::active()->where('is_featured', true)->with('category')->limit(8)->get(),
+            'categories' => $categories,
+            // "Popular products" tabs: up to four products from each category that has any
+            'popular' => $categories->where('products_count', '>', 0)->take(4)->mapWithKeys(fn ($c) => [
+                $c->id => Product::active()->where('category_id', $c->id)->with(['category', 'variants'])->limit(4)->get(),
+            ]),
+            'codeCount' => Variant::count(),
             'certifications' => Certification::active()->get(),
-            'latestPosts' => Post::published()->limit(3)->get(),
             'about' => Page::where('slug', 'about-us')->where('is_active', true)->first(),
         ]);
     }
 
     public function products(Request $request, ?Category $category = null)
     {
-        $q = Product::active()->with('category')->withCount('variants');
+        $q = Product::active()->with(['category', 'variants']);
 
         if ($category) {
             abort_unless($category->is_active, 404);
@@ -53,9 +59,15 @@ class SiteController extends Controller
     {
         $product = Product::active()->where('slug', $slug)->with(['category', 'variants'])->firstOrFail();
 
+        $versions = $product->versions();
+
         return view('pages.product', [
             'product' => $product,
-            'related' => Product::active()->where('category_id', $product->category_id)->where('id', '!=', $product->id)->limit(4)->get(),
+            'versions' => $versions,
+            'related' => Product::active()->with(['category', 'variants'])
+                ->where('category_id', $product->category_id)
+                ->whereNotIn('id', $versions->pluck('id')->push($product->id))
+                ->limit(4)->get(),
         ]);
     }
 

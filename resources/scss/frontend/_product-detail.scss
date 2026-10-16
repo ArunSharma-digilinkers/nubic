@@ -1,0 +1,360 @@
+// Product detail page, Havells-style: gallery + summary card, sticky product bar.
+
+.product-bar {
+    position: sticky;
+    top: 0;
+    z-index: 1010;
+    background: #fff;
+    border-bottom: 1px solid $line;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+
+    .container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem 1.5rem;
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
+    }
+
+    .pb-name {
+        font-weight: 700;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .pb-sub {
+        font-weight: 500;
+        color: $muted;
+    }
+
+    .pb-links {
+        gap: 1.2rem;
+        font-size: 0.9rem;
+
+        a {
+            color: #3a3a3a;
+            text-decoration: none;
+
+            &:hover {
+                color: $primary;
+            }
+        }
+    }
+
+    .pb-actions {
+        margin-left: auto;
+        display: flex;
+        gap: 0.5rem;
+        flex: none;
+    }
+}
+
+.pd-wrap {
+    padding-bottom: 4rem;
+}
+
+.pd-crumbs {
+    padding: 1.1rem 0;
+    margin: 0;
+    font-size: 0.85rem;
+
+    a {
+        color: $muted;
+        text-decoration: none;
+    }
+}
+
+.pd-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 1.75rem;
+    align-items: start;
+
+    @include media-breakpoint-down(lg) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.pd-gallery {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 100%;
+        max-width: 560px;
+        height: 420px;
+        object-fit: contain;
+
+        @include media-breakpoint-down(md) {
+            height: 280px;
+        }
+    }
+}
+
+.pd-summary {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    @include media-breakpoint-down(md) {
+        padding: 1.4rem;
+    }
+
+    .pd-cat {
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
+
+    h1 {
+        font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+        font-weight: 800;
+        line-height: 1.12;
+        margin: -0.6rem 0 0;
+    }
+
+    .pd-meta {
+        color: $muted;
+        font-size: 0.92rem;
+        margin: -0.6rem 0 0;
+    }
+}
+
+.pd-price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+
+    strong {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: $ink;
+    }
+
+    .on-request {
+        font-size: 1.1rem;
+    }
+
+    span {
+        font-size: 0.82rem;
+        color: $muted;
+    }
+}
+
+.pd-option {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.pd-option-label {
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.chip-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.5rem;
+}
+
+.chip {
+    min-height: 44px;
+    padding: 0.4rem 0.6rem;
+    border-radius: 10px;
+    border: 1.5px solid #d6d6d6;
+    background: #fff;
+    color: $ink;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+        border-color: $primary;
+        color: $ink;
+    }
+
+    &.is-on,
+    &[aria-checked='true'] {
+        background: $primary;
+        border-color: $primary;
+        color: #fff;
+    }
+}
+
+.pd-features {
+    padding-top: 1rem;
+    border-top: 1px solid #efefef;
+}
+
+.pd-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+
+    .btn {
+        flex: 1 1 180px;
+    }
+}
+
+.pd-dealer {
+    background: #f6f6f6;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.92rem;
+
+    a {
+        font-weight: 700;
+        text-decoration: none;
+    }
+}
+
+.pd-section {
+    margin-top: 3.25rem;
+    scroll-margin-top: 80px;
+
+    h2 {
+        font-size: clamp(1.5rem, 2.4vw, 1.75rem);
+        font-weight: 700;
+        margin-bottom: 1.1rem;
+    }
+}
+
+.pd-panel {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+
+    &.cms-content {
+        padding: 1.5rem 1.75rem;
+    }
+}
+
+.spec-list {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    @include media-breakpoint-down(md) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    > div {
+        display: flex;
+        gap: 1rem;
+        padding: 0.85rem 1.5rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    dt {
+        flex: 0 0 45%;
+        font-weight: 400;
+        color: $muted;
+    }
+
+    dd {
+        margin: 0;
+        font-weight: 600;
+    }
+}
+
+.codes-table {
+    min-width: 520px;
+
+    th {
+        background: #fafafa;
+        font-weight: 700;
+        padding: 0.85rem 1.5rem;
+        border-bottom-color: #eee;
+    }
+
+    td {
+        padding: 0.75rem 1.5rem;
+        border-bottom-color: #f0f0f0;
+    }
+
+    td.code {
+        font-weight: 700;
+    }
+
+    tr.is-selected td {
+        background: #fff1f0;
+    }
+
+    tr.is-selected td:first-child {
+        box-shadow: inset 4px 0 0 $primary;
+    }
+}
+
+.pd-note {
+    margin: 0.75rem 0 0;
+    font-size: 0.85rem;
+    color: $muted;
+}
+
+.dl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.dl-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: $ink;
+    text-decoration: none;
+
+    i {
+        width: 48px;
+        height: 48px;
+        flex: none;
+        border-radius: 10px;
+        background: #fff1f0;
+        color: $primary;
+        font-size: 1.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    strong,
+    small {
+        display: block;
+    }
+
+    small {
+        color: $muted;
+    }
+
+    &:hover {
+        color: $ink;
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+    }
+}

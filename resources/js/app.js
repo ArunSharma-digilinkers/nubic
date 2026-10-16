@@ -21,6 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
         items.forEach((el) => el.classList.add('in'));
     }
 
+    // product page: rating chips swap the code, pack, MRP and highlighted table row
+    document.querySelectorAll('[data-variant-picker]').forEach((group) => {
+        group.addEventListener('click', (e) => {
+            const chip = e.target.closest('[data-variant]');
+            if (!chip) return;
+            group.querySelectorAll('[data-variant]').forEach((c) => c.setAttribute('aria-checked', String(c === chip)));
+            document.querySelectorAll('[data-v]').forEach((el) => {
+                const value = chip.dataset[el.dataset.v];
+                if (value !== undefined) el.textContent = value;
+            });
+            document.querySelectorAll('[data-variant-row]').forEach((row) => {
+                row.classList.toggle('is-selected', row.dataset.variantRow === chip.dataset.variant);
+            });
+        });
+    });
+
     const btn = document.querySelector('.back-to-top');
     if (btn) {
         const toggle = () => btn.classList.toggle('show', window.scrollY > 500);

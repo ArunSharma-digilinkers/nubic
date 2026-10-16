@@ -16,6 +16,11 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function imageUrl(): string
+    {
+        return $this->image ? asset('storage/'.$this->image) : asset('img/product-placeholder.png');
+    }
+
     public function scopeActive($q)
     {
         return $q->where('is_active', true)->orderBy('sort_order');
