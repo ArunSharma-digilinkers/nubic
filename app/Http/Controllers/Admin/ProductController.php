@@ -29,7 +29,7 @@ class ProductController extends ResourceController
     {
         return [
             ['name' => 'category_id', 'label' => 'Category', 'type' => 'select', 'col' => 6, 'rules' => 'required|exists:categories,id',
-                'options' => Category::orderBy('sort_order')->pluck('name', 'id')->all()],
+                'options' => Category::with('parent')->orderBy('sort_order')->get()->mapWithKeys(fn ($c) => [$c->id => $c->parent ? $c->parent->name.' › '.$c->name : $c->name])->all()],
             ['name' => 'name', 'label' => 'Product Name', 'type' => 'text', 'col' => 6, 'rules' => 'required|string|max:255'],
             ['name' => 'slug', 'label' => 'Slug (auto if empty)', 'type' => 'text', 'rules' => 'nullable|string|max:255'],
             ['name' => 'description', 'label' => 'Description', 'type' => 'editor', 'rules' => 'nullable|string'],

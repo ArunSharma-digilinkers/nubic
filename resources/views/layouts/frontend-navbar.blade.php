@@ -1,5 +1,5 @@
 @php
-    $navCategories = \App\Models\Category::active()->withCount('products')->get();
+    $navCategories = \App\Models\Category::active()->topLevel()->with('children')->get();
     $tel = fn ($n) => 'tel:'.preg_replace('/\s+/', '', $n);
 @endphp
 
@@ -46,15 +46,43 @@
                         <a class="nav-link dropdown-toggle {{ request()->routeIs('products*', 'product') ? 'active' : '' }}" href="{{ route('products') }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
                         <div class="dropdown-menu mega-menu">
                             <div class="container">
-                                <div class="mega-grid">
-                                    @foreach ($navCategories as $c)
-                                        <a href="{{ route('products.category', $c->slug) }}" class="mega-item">
-                                            <img src="{{ $c->imageUrl() }}" alt="" loading="lazy">
-                                            <span><strong>{{ $c->name }}</strong><small>{{ $c->products_count }} {{ \Illuminate\Support\Str::plural('product', $c->products_count) }}</small></span>
-                                        </a>
-                                    @endforeach
+                                <div class="mega-layout" data-mega>
+                                    <div class="mega-tabs" role="tablist" aria-label="Product categories">
+                                        @foreach ($navCategories as $c)
+                                            <a href="{{ route('products.category', $c->slug) }}" class="mega-tab {{ $loop->first ? 'is-active' : '' }}" data-mega-tab="{{ $c->id }}">
+                                                <img src="{{ $c->imageUrl() }}" alt="" loading="lazy">
+                                                <span>{{ $c->name }}</span>
+                                                <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                                            </a>
+                                        @endforeach
+                                        <a href="{{ route('products') }}" class="mega-all">View all products <i class="bi bi-arrow-right"></i></a>
+                                    </div>
+                                    <div class="mega-panes">
+                                        @foreach ($navCategories as $c)
+                                            <div class="mega-pane {{ $loop->first ? 'is-active' : '' }}" data-mega-pane="{{ $c->id }}">
+                                                <div class="mega-pane-head">
+                                                    <img src="{{ $c->imageUrl() }}" alt="" loading="lazy">
+                                                    <div>
+                                                        <h4>{{ $c->name }}</h4>
+                                                        <a href="{{ route('products.category', $c->slug) }}">Shop all {{ $c->name }} <i class="bi bi-arrow-right"></i></a>
+                                                    </div>
+                                                </div>
+                                                @if ($c->children->isNotEmpty())
+                                                    <div class="mega-tiles">
+                                                        @foreach ($c->children as $sc)
+                                                            <a href="{{ route('products.category', $sc->slug) }}" class="mega-tile">
+                                                                <img src="{{ $sc->imageUrl() }}" alt="" loading="lazy">
+                                                                <span>{{ $sc->name }}</span>
+                                                            </a>
+                                                        @endforeach
+                                                    </div>
+                                                @else
+                                                    <p class="mega-empty">Explore the complete {{ $c->name }} range.</p>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-                                <a href="{{ route('products') }}" class="mega-all">View all products <i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>
                     </li>

@@ -8,6 +8,7 @@
         <nav><ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item {{ $category ? '' : 'active' }}">@if($category)<a href="{{ route('products') }}">Products</a>@else Products @endif</li>
+            @if ($category?->parent)<li class="breadcrumb-item"><a href="{{ route('products.category', $category->parent->slug) }}">{{ $category->parent->name }}</a></li>@endif
             @if ($category)<li class="breadcrumb-item active">{{ $category->name }}</li>@endif
         </ol></nav>
     </div>
@@ -26,9 +27,15 @@
                 <div class="list-group side-list">
                     <a href="{{ route('products') }}" class="list-group-item list-group-item-action {{ $category ? '' : 'active' }}">All Products</a>
                     @foreach ($categories as $c)
+                        @php $open = $category && ($category->id === $c->id || $category->parent_id === $c->id); @endphp
                         <a href="{{ route('products.category', $c->slug) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {{ $category?->id === $c->id ? 'active' : '' }}">
-                            {{ $c->name }} <span class="badge rounded-pill">{{ $c->products_count }}</span>
+                            {{ $c->name }} <span class="badge rounded-pill">{{ $c->products_count + $c->children->sum('products_count') }}</span>
                         </a>
+                        @if ($open)
+                            @foreach ($c->children as $sc)
+                                <a href="{{ route('products.category', $sc->slug) }}" class="list-group-item list-group-item-action side-sub {{ $category?->id === $sc->id ? 'active' : '' }}">{{ $sc->name }}</a>
+                            @endforeach
+                        @endif
                     @endforeach
                 </div>
             </aside>

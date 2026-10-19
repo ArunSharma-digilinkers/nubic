@@ -37,6 +37,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // products mega menu: hovering / focusing a category shows its subcategories
+    document.querySelectorAll('[data-mega]').forEach((mega) => {
+        const show = (id) => {
+            mega.querySelectorAll('[data-mega-tab]').forEach((t) => t.classList.toggle('is-active', t.dataset.megaTab === id));
+            mega.querySelectorAll('[data-mega-pane]').forEach((p) => p.classList.toggle('is-active', p.dataset.megaPane === id));
+        };
+        mega.querySelectorAll('[data-mega-tab]').forEach((tab) => {
+            ['mouseenter', 'focus'].forEach((ev) => tab.addEventListener(ev, () => show(tab.dataset.megaTab)));
+        });
+    });
+
     const btn = document.querySelector('.back-to-top');
     if (btn) {
         const toggle = () => btn.classList.toggle('show', window.scrollY > 500);

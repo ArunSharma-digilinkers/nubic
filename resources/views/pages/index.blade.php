@@ -4,29 +4,28 @@
 @section('content')
 {{-- Hero --}}
 <section class="home-hero">
-    <div class="container">
         <div id="heroCarousel" class="carousel slide carousel-fade hero-frame" data-bs-ride="carousel" data-bs-interval="6000">
             <div class="carousel-inner">
                 @forelse ($sliders as $i => $s)
                     <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
                         @if ($s->image)<img class="hero-img" src="{{ asset('storage/'.$s->image) }}" alt="">@endif
-                        <div class="hero-copy">
+                        <div class="container h-100"><div class="hero-copy">
                             <h1>{{ $s->title }}</h1>
                             <p>{{ $s->subtitle ?: 'MCBs, isolators, RCCBs, distribution boards, changeovers and energy meters, made in-house in Delhi.' }}</p>
                             <div class="hero-actions">
                                 <a href="{{ $s->button_text ? ($s->button_url ?: route('products')) : route('products') }}" class="btn btn-light btn-lg">{{ $s->button_text ?: 'Explore Products' }}</a>
                                 @if (!empty($S['catalogue_url']))<a href="{{ $S['catalogue_url'] }}" target="_blank" rel="noopener" class="btn btn-outline-light btn-lg">Download Catalogue</a>@endif
                             </div>
-                        </div>
+                        </div></div>
                     </div>
                 @empty
                     <div class="carousel-item active">
-                        <div class="hero-copy">
+                        <div class="container h-100"><div class="hero-copy">
                             <span class="hero-tag">ISI marked · 10 kA</span>
                             <h1>Electrical protection, made in India</h1>
                             <p>MCBs, isolators, RCCBs, distribution boards, changeovers and energy meters.</p>
                             <div class="hero-actions"><a href="{{ route('products') }}" class="btn btn-primary btn-lg">Explore Products</a></div>
-                        </div>
+                        </div></div>
                     </div>
                 @endforelse
             </div>
@@ -38,6 +37,7 @@
                 </div>
             @endif
         </div>
+    <div class="container">
         <div class="info-strip">
             Dealer and bulk pricing available across India. <a href="{{ route('contact') }}">Talk to our sales team</a>
         </div>
@@ -146,15 +146,22 @@
 <section class="home-section">
     <div class="container">
         <div class="section-head"><h2>Certified &amp; Trusted</h2></div>
-        <div class="cert-grid">
-            @foreach ($certifications as $c)
-                <div class="cert-card">
-                    <span class="cert-logo">@if ($c->image)<img src="{{ asset('storage/'.$c->image) }}" alt="">@else<i class="bi bi-patch-check"></i>@endif</span>
-                    <strong>{{ $c->name }}</strong>
-                </div>
-            @endforeach
-        </div>
     </div>
+        @php $reps = max(1, (int) ceil(8 / $certifications->count())); @endphp
+        <div class="cert-marquee">
+            <div class="cert-track">
+                @foreach ([0, 1] as $half)
+                    @for ($r = 0; $r < $reps; $r++)
+                        @foreach ($certifications as $c)
+                            <div class="cert-card" @if ($half || $r) aria-hidden="true" @endif>
+                                <span class="cert-logo">@if ($c->image)<img src="{{ asset('storage/'.$c->image) }}" alt="">@else<i class="bi bi-patch-check"></i>@endif</span>
+                                <strong>{{ $c->name }}</strong>
+                            </div>
+                        @endforeach
+                    @endfor
+                @endforeach
+            </div>
+        </div>
 </section>
 @endif
 

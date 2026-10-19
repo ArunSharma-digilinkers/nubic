@@ -127,60 +127,181 @@
     width: 100%;
     margin-top: 0 !important;
     border: 0;
-    border-top: 1px solid $line;
+    border-top: 3px solid $primary;
     border-radius: 0;
-    padding: 1.5rem 0;
-    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.08);
+    padding: 0;
+    background: #fff;
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.14);
 
-    .mega-grid {
+    .mega-layout {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 0.75rem;
+        grid-template-columns: 300px 1fr;
+        min-height: 380px;
+        max-height: calc(100vh - 150px);
     }
 
-    .mega-item {
+    // left rail: category list
+    .mega-tabs {
+        display: flex;
+        flex-direction: column;
+        padding: 1.25rem 1rem 1.25rem 0;
+        border-right: 1px solid $line;
+        overflow-y: auto;
+    }
+
+    .mega-tab {
         display: flex;
         align-items: center;
-        gap: 0.9rem;
-        padding: 0.6rem;
+        gap: 0.75rem;
+        padding: 0.6rem 0.75rem;
         border-radius: 12px;
         color: $ink;
+        font-weight: 600;
+        font-size: 0.95rem;
         text-decoration: none;
+        transition: background 0.2s ease, color 0.2s ease;
 
         img {
-            width: 64px;
-            height: 48px;
+            width: 38px;
+            height: 38px;
             object-fit: contain;
-            background: $page-bg;
+            background: #fff;
+            border: 1px solid #eee;
             border-radius: 8px;
+            padding: 3px;
             flex: none;
         }
 
-        strong {
-            display: block;
-            font-weight: 600;
-            font-size: 0.95rem;
-            line-height: 1.3;
+        span {
+            flex: 1;
+            line-height: 1.25;
         }
 
-        small {
-            color: $muted;
+        .bi {
+            font-size: 0.8rem;
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
-        &:hover {
-            background: $page-bg;
+        &.is-active {
+            background: $primary;
+            color: #fff;
 
-            strong {
-                color: $primary;
+            .bi {
+                opacity: 1;
+                transform: none;
             }
         }
     }
 
     .mega-all {
-        display: inline-block;
-        margin-top: 1rem;
+        margin-top: auto;
+        padding: 0.9rem 0.75rem 0;
         font-weight: 700;
+        font-size: 0.9rem;
         text-decoration: none;
+    }
+
+    // right: the active category's subcategory tiles
+    .mega-panes {
+        padding: 1.5rem 0 1.5rem 2rem;
+        background: radial-gradient(circle at 100% 0, rgba(0, 0, 0, 0.04) 0, transparent 55%), #fff;
+        overflow-y: auto;
+    }
+
+    .mega-pane {
+        display: none;
+
+        &.is-active {
+            display: block;
+            animation: megaIn 0.25s ease;
+        }
+    }
+
+    .mega-pane-head {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid $line;
+
+        img {
+            width: 84px;
+            height: 84px;
+            object-fit: contain;
+            background: $page-bg;
+            border-radius: 16px;
+            padding: 8px;
+        }
+
+        h4 {
+            margin: 0 0 0.25rem;
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        a {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+    }
+
+    .mega-tiles {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        gap: 0.75rem;
+    }
+
+    .mega-tile {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.6rem 0.75rem;
+        border: 1px solid #ececec;
+        border-radius: 12px;
+        background: #fff;
+        color: $ink;
+        font-size: 0.9rem;
+        font-weight: 600;
+        line-height: 1.25;
+        text-decoration: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, color 0.2s ease;
+
+        img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            background: $page-bg;
+            border-radius: 8px;
+            padding: 3px;
+            flex: none;
+        }
+
+        &:hover {
+            color: $primary;
+            border-color: $primary;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+    }
+
+    .mega-empty {
+        color: $muted;
+        margin: 0;
+    }
+}
+
+@keyframes megaIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
     }
 }
 
@@ -189,6 +310,26 @@
         box-shadow: none;
         padding: 0.5rem 0;
         border-top: 0;
+
+        .mega-layout {
+            display: block;
+            min-height: 0;
+            max-height: none;
+        }
+
+        .mega-tabs {
+            border-right: 0;
+            padding: 0;
+        }
+
+        .mega-tab.is-active {
+            background: transparent;
+            color: $ink;
+        }
+
+        .mega-panes {
+            display: none;
+        }
     }
 }
 

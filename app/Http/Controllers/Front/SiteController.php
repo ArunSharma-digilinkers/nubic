@@ -18,7 +18,7 @@ class SiteController extends Controller
 {
     public function home()
     {
-        $categories = Category::active()->withCount('products')->get();
+        $categories = Category::active()->topLevel()->withCount('products')->get();
 
         return view('pages.index', [
             'sliders' => Slider::active()->get(),
@@ -39,7 +39,7 @@ class SiteController extends Controller
 
         if ($category) {
             abort_unless($category->is_active, 404);
-            $q->where('category_id', $category->id);
+            $q->whereIn('category_id', $category->familyIds());
         }
         if ($s = trim((string) $request->get('q'))) {
             $q->where(function ($w) use ($s) {
@@ -51,7 +51,7 @@ class SiteController extends Controller
         return view('pages.products', [
             'category' => $category,
             'products' => $q->paginate(12)->withQueryString(),
-            'categories' => Category::active()->withCount('products')->get(),
+            'categories' => Category::active()->topLevel()->with(['children' => fn ($q) => $q->withCount('products')])->withCount('products')->get(),
         ]);
     }
 

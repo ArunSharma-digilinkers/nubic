@@ -11,29 +11,16 @@
     <div class="p-card-body">
         @if ($product->category)<span class="p-card-cat">{{ $product->category->name }}</span>@endif
         <h3><a href="{{ route('product', $product->slug) }}">{{ $product->name }}</a></h3>
-
-        @if ($ratings)
-            <div class="chips">
-                @foreach (array_slice($ratings, 0, 4) as $r)<span>{{ $r }}</span>@endforeach
-                @if (count($ratings) > 4)<span class="more">+{{ count($ratings) - 4 }}</span>@endif
-            </div>
-        @endif
-
-        @if ($points)
-            <ul class="dash-list">@foreach ($points as $pt)<li>{{ $pt }}</li>@endforeach</ul>
-        @endif
-
         <div class="p-card-price">
             @if ($showPrices && $minMrp)
-                MRP from ₹{{ number_format($minMrp) }}
+                From ₹{{ number_format($minMrp) }}
             @else
-                <span class="muted">Ask for dealer price</span>
+                Dealer price on request
             @endif
         </div>
-
-        <div class="p-card-actions">
-            <a href="{{ route('product', $product->slug) }}" class="btn btn-outline-primary btn-sm">View Details</a>
-            <a href="{{ route('contact', ['product' => $product->id]) }}" class="btn btn-primary btn-sm">Enquire</a>
-        </div>
+    </div>
+    <div class="p-card-actions">
+        <a href="{{ route('product', $product->slug) }}" class="btn-view">Details</a>
+        <a href="{{ route('contact', ['product' => $product->id]) }}" class="btn-enq">Enquire <span aria-hidden="true">→</span></a>
     </div>
 </article>
